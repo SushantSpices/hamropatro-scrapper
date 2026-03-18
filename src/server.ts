@@ -28,17 +28,16 @@ async function scrapeSingleMonth(
 // ---------- Scrape full year ----------
 async function scrapeYear(bsYear: number): Promise<number[]> {
   const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
 
   try {
-    const results: number[] = [];
+    const promises = Array.from({ length: 12 }, async (_, i) => {
+      const page = await browser.newPage();
+      const result = await scrapeSingleMonth(page, bsYear, i + 1);
+      await page.close();
+      return result;
+    });
 
-    for (let month = 1; month <= 12; month++) {
-      const days = await scrapeSingleMonth(page, bsYear, month);
-      results.push(days);
-    }
-
-    return results;
+    return await Promise.all(promises);
   } finally {
     await browser.close();
   }
