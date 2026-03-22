@@ -81,6 +81,38 @@ Returns the number of days in each of the 12 months for a specific Bikram Sambat
   - **Code:** 400 (Invalid year)
   - **Code:** 500 (Failed to scrape data)
 
+### Get Date Conversions
+
+Returns the mapping of Nepali (BS) dates to English (AD) dates for a specific month of a BS year.
+
+- **URL:** `/conversions`
+- **Method:** `GET`
+- **Query Parameters:**
+  - `year`: Bikram Sambat year (e.g., `2081`)
+  - `month`: Bikram Sambat month index (1-12)
+- **Success Response:**
+  - **Code:** 200
+  - **Content Example:** `GET http://localhost:8000/conversions?year=2081&month=1`
+    ```json
+    {
+      "result": [
+        {
+          "nep": "2081-1-1",
+          "eng": "2024-4-13"
+        },
+        ...
+      ],
+      "query": {
+        "year": "2081",
+        "month": "1"
+      }
+    }
+    ```
+
+- **Error Response:**
+  - **Code:** 400 (Missing year or month)
+  - **Code:** 500 (Failed to fetch conversions)
+
 ## License
 
 ISC
