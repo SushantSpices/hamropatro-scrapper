@@ -13,6 +13,21 @@ export const BS_MONTHS = [
   "चैत",
 ];
 
+export const AD_MONTH_MAPPING: Record<string, number> = {
+  jan: 1,
+  feb: 2,
+  mar: 3,
+  apr: 4,
+  may: 5,
+  jun: 6,
+  jul: 7,
+  aug: 8,
+  sep: 9,
+  oct: 10,
+  nov: 11,
+  dec: 12,
+};
+
 export const EN_TO_NP_DIGIT: Record<string, string> = {
   "0": "०",
   "1": "१",
@@ -54,4 +69,12 @@ export function escapeRegex(value: string): string {
 
 export function getExpectedDaySet(dayCount: number): number[] {
   return Array.from({ length: dayCount }, (_, i) => i + 1);
+}
+
+export function convertNepNumberToEng(input?: string): string {
+  if(!input) return ""
+  return input
+    .split("") // break into characters
+    .map(char => NP_TO_EN_DIGIT[char] || char) // convert if exists
+    .join(""); // combine back
 }
